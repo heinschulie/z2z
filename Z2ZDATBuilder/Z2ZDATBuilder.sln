@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Z2ZDATBuilder", "..\..\..\..\GitHub\ruci\RuciWinApp\RuciWinApp\Z2ZDATBuilder.csproj", "{01C4A0AE-E3F3-4F5E-A832-764F75F9F08C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01C4A0AE-E3F3-4F5E-A832-764F75F9F08C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C4A0AE-E3F3-4F5E-A832-764F75F9F08C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C4A0AE-E3F3-4F5E-A832-764F75F9F08C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C4A0AE-E3F3-4F5E-A832-764F75F9F08C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://localhost/z2zsoap/Z2ZService.asmx?wsdl" docRef="http://localhost/z2zsoap/Z2ZService.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://localhost/z2zsoap/Z2ZService.asmx" xmlns:q1="http://www.z2z.co.za/" binding="q1:Z2ZWebMethodsSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://localhost/z2zsoap/Z2ZService.asmx" xmlns:q2="http://www.z2z.co.za/" binding="q2:Z2ZWebMethodsSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

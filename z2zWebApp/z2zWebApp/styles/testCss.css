@@ -1,0 +1,99 @@
+﻿body 
+{
+}
+
+.wrapper
+{
+    width: 1000px;
+    margin: 0px auto 0px auto;  
+}
+
+.tramColumn
+{
+    width: 250px;
+    float: left;  
+    height: 250px; 
+    /*border: 1px solid red;*/ 
+}
+    .heading
+    {
+        width: 100%; 
+        /*border: 1px solid #009900;*/ 
+    }
+        .heading h2
+        {
+            text-align: center; 
+            font-family: 'Bauhaus 93'; 
+            color: #1E90FF; 
+        }
+    .category
+    {
+        width: 100%; 
+        /*border: 1px solid #FF3300;*/ 
+    }
+        .category h3
+        {
+            text-align: left; 
+            font-family: Broadway; 
+            color: #696969;
+            transition: 0.5s; 
+        }
+            .category h3:hover
+            { 
+                color: #FF4500;
+                cursor: pointer;  
+            }
+        .subCategory
+        {
+            overflow: hidden; 
+            width: 100%; 
+            /*border: 1px solid yellow;*/
+            height: 0px;  
+        }
+            .subCategory h5
+            {
+                text-align: center; 
+                font-family: Broadway; 
+                color: #696969;
+                transition: 0.5s; 
+            }
+            .subCategory h5:hover
+            {
+                text-align: center; 
+                font-family: Broadway; 
+                color: #1E90FF;
+                transition: 0.5s; 
+                cursor: pointer; 
+            }
+
+.navColumn
+{
+    width: 494px;
+    float: left;  
+    height: 496px; 
+    /*border: 1px solid #0033FF;*/ 
+}
+
+.testDiv
+{
+    width: 150px;
+    height: 150px;
+    background-color: red; 
+    position: relative;  
+}
+
+circle {
+  stroke: #000;
+  fill-opacity: 0.1;
+}
+
+.node
+{
+    fill: cadetblue;  
+    }
+    .node:hover
+    {
+        fill: azure;
+        stroke: red;  
+    }
+
