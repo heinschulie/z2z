@@ -29,8 +29,7 @@ namespace Z2Z
             vStringBuilder.AppendLine("       JOB_Job t2,");
             vStringBuilder.AppendLine("       DOC_Document t3,");
             vStringBuilder.AppendLine("       LAN_Language t4,");
-            vStringBuilder.AppendLine("       LAN_Language t5,");
-            vStringBuilder.AppendLine("       JBT_JobType t6");
+            vStringBuilder.AppendLine("       LAN_Language t5");
             vStringBuilder.AppendLine("where  t1.CLN_Key = t2.CLN_Key");
             vStringBuilder.AppendLine("and    t2.CLN_Key = t3.CLN_Key");
             vStringBuilder.AppendLine("and    t2.DOC_Key = t3.DOC_Key");

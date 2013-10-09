@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Zephry;
 using System.Web.Services;
+using System.IO;
 using System.Web.Script.Services;
 using System.Web.Script.Serialization;
 using System.Drawing;
@@ -155,6 +156,25 @@ namespace Z2Z
                 vContributor.value = vContributor.children.Count();
             }
             return vContributorCollection.ContributorList;
+        }
+
+        [WebMethod(EnableSession = false)]
+        public static string UploadDocument(string json)
+        {
+            //Capture File From Post
+            //HttpPostedFile file = context.Request.Files["fileToUpload"];
+
+            //Optional: Convert to File to binary if you need to forward it to a video encoding service like Panda Stream
+            //BinaryReader vBinaryReader = new BinaryReader(file.InputStream);
+            //byte[] binData = vBinaryReader.ReadBytes(file.ContentLength);
+            //vBinaryReader.Close();
+
+
+            string result = json + "Shine your lonely light me";
+            return result;  
+
+            //context.Response.ContentType = "text/plain";
+            //context.Response.Write(result);
         }
     }
 }

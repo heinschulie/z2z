@@ -85,7 +85,13 @@
 circle {
   stroke: #000;
   fill-opacity: 0.1;
+  fill: cadetblue; 
 }
+    circle:hover
+    {
+        fill: azure;
+        stroke: red;  
+    }
 
 .node
 {

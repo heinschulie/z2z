@@ -69,18 +69,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ajaxExample.aspx" />
+    <Content Include="circlepackExample.aspx" />
     <Content Include="dashboard.aspx" />
     <Content Include="default.aspx" />
+    <Content Include="fileUploadExample.aspx" />
+    <Content Include="images\tree.png" />
+    <Content Include="images\z2zLogo.png" />
+    <Content Include="newCirclePack.aspx" />
     <Content Include="scripts\jquery-1.10.1.min.js" />
+    <Content Include="scripts\newTest.js" />
     <Content Include="scripts\test.js" />
     <Content Include="scripts\z2z.js" />
     <Content Include="styles\testCss.css" />
+    <Content Include="styles\z2z.css" />
+    <Content Include="svgDrawPathExample.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ajaxExample.aspx.cs">
       <DependentUpon>ajaxExample.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="circlepackExample.aspx.cs">
+      <DependentUpon>circlepackExample.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="circlepackExample.aspx.designer.cs">
+      <DependentUpon>circlepackExample.aspx</DependentUpon>
     </Compile>
     <Compile Include="classes\ServerSession.cs" />
     <Compile Include="dashboard.aspx.cs">
@@ -97,7 +112,28 @@
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="fileUploadExample.aspx.cs">
+      <DependentUpon>fileUploadExample.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="fileUploadExample.aspx.designer.cs">
+      <DependentUpon>fileUploadExample.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="newCirclePack.aspx.cs">
+      <DependentUpon>newCirclePack.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="newCirclePack.aspx.designer.cs">
+      <DependentUpon>newCirclePack.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="svgDrawPathExample.aspx.cs">
+      <DependentUpon>svgDrawPathExample.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="svgDrawPathExample.aspx.designer.cs">
+      <DependentUpon>svgDrawPathExample.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Web.Debug.config">
@@ -108,7 +144,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="images\" />
     <Folder Include="masters\" />
     <Folder Include="webforms\" />
   </ItemGroup>
