@@ -25,21 +25,44 @@ var svgcanvas = divNavigation.append("svg:svg")
     .attr("height", "100%")
     .attr("id", "maisondulechat");
 
-var svgWidth = svgcanvas.width;
-var svgHeight = svgcanvas.height;
+var svgWidth = svgcanvas.node().clientWidth;
+var svgHeight = svgcanvas.node().clientHeight;
 
 svgcanvas.append("svg:path")
     .attr("d", "M431.583 227.114l8.5452 -21.828c1.57876,-37.7046 -6.40923,-90.4224 -12.5752,-129.043 -1.50159,-9.39802 14.5856,-110.755 -28.6636,-63.9654 -4.5087,4.87755 -10.1985,13.5745 -13.3129,20.5435l-32.262 2.57546c-5.97628,-10.5792 -15.1219,-20.6626 -31.9951,-18.2728 -2.33217,9.68578 1.80112,20.5592 5.53679,29.179 5.26603,12.1514 -1.87699,15.4816 -2.68534,29.9442 -1.42442,25.4512 15.4789,33.8577 22.1799,52.3542 -4.18823,7.50534 -22.8692,21.9287 -31.3071,28.7016 -19.4788,15.6372 -34.483,-0.966616 -82.8831,38.7405 -10.9716,9.003 -17.6555,22.0582 -28.8625,32.5641 -4.00904,3.7579 -9.79566,11.381 -13.789,16.3213 -5.03321,6.22611 -8.5609,10.7335 -13.0578,17.0211 -28.7853,40.2526 -49.0227,81.3802 -48.8671,135.482 -22.5893,1.95285 -46.1451,3.15099 -68.7697,4.39882 -11.4804,0.633075 -22.6874,1.28446 -33.982,2.7128 -10.5739,1.33547 -23.633,1.79458 -24.8325,13.0617 13.3731,7.99061 63.0393,4.63819 81.0754,4.37659 28.1836,-0.408098 52.7754,6.80425 82.4972,-0.340082 7.24112,-1.73965 9.84536,-4.81215 15.5587,-2.875 7.36669,2.49698 9.98662,3.06727 18.3762,3.70296 25.4682,1.93062 60.9792,0.188353 86.9144,-1.42834 13.2906,-0.829276 29.7781,0.253753 36.0172,-8.66685 3.17715,-19.3951 -17.5587,-20.5619 -34.4071,-21.0458 11.9212,-11.5157 7.12602,-0.289069 24.1092,-23.17 3.87824,-5.22548 19.0014,-19.8215 24.6337,-22.5029 1.7161,9.02786 5.02797,20.0975 7.49487,29.1332 2.66048,9.74072 4.75591,20.3539 7.99192,29.9481 8.17373,24.2347 47.2661,16.5986 56.1671,12.6223 3.09605,-17.6725 -3.56824,-22.5893 -19.4265,-19.5024 -5.78793,-16.2167 -12.7531,-25.6814 -11.5261,-46.9744 0.761259,-13.2383 8.80811,-34.7315 13.6033,-46.3086 10.3568,-24.9986 7.91474,-19.8542 21.7561,-38.4161 5.59042,-7.49487 18.3958,-28.818 20.7476,-39.044z")
     .attr("id", "lechat")
-    .attr("transform", "translate(300,80)")
+    //.attr("transform", "translate(300,80)")
+    .attr("transform", "translate(300," + svgHeight/5 + ")")
     .style("stroke-width", 0)
     .style("stroke", "none")
     .style("fill", "#848688");
 
 // ********* Define events for circle pack
 var hoverName = function (d, i) {
-    var name = d.name;
-    d3.select("label#circleName").text("" + name);
+    //var name = d.name;
+    //d3.select("label#circleType").text("" + d.__type);
+    //d3.select("label#circleName").text("" + name);
+    var thisobj = this.__data__; 
+    var proparray = []; 
+    for (i = 0; i < Object.keys(thisobj).length; i++) {
+        var keyname = Object.keys(thisobj)[i];
+        var valuename = thisobj[keyname];
+        var obj = { thiskey: keyname, thisvalue: valuename };
+        proparray.push(obj);
+    }
+    var props = d3.select("div.properties").selectAll("label.lblproperty");
+    var propsdata = props.data(proparray);
+    //update
+    propsdata.each(function (d) {
+        d3.select(this)
+            .text(function (d) { return d.thisvalue });
+    });
+    //enter
+    propsdata.enter().append("label")
+        .classed("lblproperty", true)
+        .text("" + d.thisvalue);
+    var ex = propsdata.exit();
+    ex.remove(); 
 }
 
 // Functions for drawing an arc based on a circle's data - to give text a path to sit upon 
@@ -115,8 +138,6 @@ var drawCirclePack = function (ajaxMsg) {
         .append("g")
         .on("mouseover", hoverName)
         .attr("class", function (d) { return d.children ? "node" : "leaf"; })
-        //.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; })
-        //.attr("transform", function (d) { return "translate(0,0)"; })
         .each(function (d) {
             if (d.depth > 0) {
                 var pathid = this.__data__.r;
@@ -124,9 +145,8 @@ var drawCirclePack = function (ajaxMsg) {
                 .text(function (d) { return d.name });
                 d3.select(this).append("path")
                 .attr("id", pathid)
-                //.attr("d", function (d) { return describeArc(d.x, d.y, d.r, 180, 270); })
                 .attr("stroke", "#446688")
-                .attr("stroke-width", function (d) { return 14 - (d.depth*2) })
+                .attr("stroke-width", function (d) { return 14 - (d.depth * 3) })
                 .attr("transform", function (d) { return "translate(-" + d.x + ",-" + d.y + ")"; })
                 .attr("transform", "translate(0,0)")
                 .attr("class", "paths")
@@ -135,6 +155,12 @@ var drawCirclePack = function (ajaxMsg) {
                     .attr("class", "pathText")
                     .attr("xlink:href", "#" + pathid)
                     .text(function (d) { return d.name });
+            }
+            else {
+                //d3.select(this).select("circle").classed("node", false);
+                //d3.select(this).select("circle").classed("firstCircle", true);
+                //d3.select(this).select("svg:circle").style("fill", "none");
+                //d3.select(d3.select(this).node()).classed("firstCircle", true);
             }
         });
     
@@ -146,17 +172,10 @@ var drawCirclePack = function (ajaxMsg) {
         ;
 
     d3.selectAll("path.paths")
-        //.attr("transform", function (d) { return "translate(0,0)"; })
         .transition()
         .duration(2000)
         .attr("d", function (d) { return describeArc(d.x, d.y, d.r, 180, 270); })
-        .attr("transform", function (d) { return "translate(-" + d.x + ",-" + d.y + ")"; });
-        //.attr("d", function (d) { return describeArc(d.x, d.y, d.r, 180, 270); })
-        //.attr("stroke", "#446688")
-        //.attr("stroke-width", function (d) { return 15 - d.depth })
-        //.attr("transform", function (d) { return "translate(-" + d.x + ",-" + d.y + ")"; })
-        //.attr("transform", "translate(0,0)")
-        //.attr("class", "paths");      
+        .attr("transform", function (d) { return "translate(-" + d.x + ",-" + d.y + ")"; });  
 
     //ENTER & UPDATE
 
@@ -184,47 +203,16 @@ var ajaxData = function AjaxCall(d, i) {
 
     $.ajax({
         type: "POST",
-        url: "default.aspx/" + d.methodName,
+        url: "admindashboard.aspx/" + d.methodName,
         data: "{}",
         contentType: "application/json",
-        dataType: "json",
-        success:
-            function (msg) {
-                // Feed the fetched data to the pack!
-                drawCirclePack(msg);
-            }
+        dataType: "json"
+    })
+    .done(function (msg) {
+        // Feed the fetched data to the pack!
+        drawCirclePack(msg);
     });
 }
-
-// *********** Create/Hover/Click Functions for SubCategories
-
-var clnSubCategories = [
-  { name: "Documents", methodName: "AjaxClnDocCollection" },
-  { name: "Jobs", methodName: "AjaxClnJobCollection" }
-];
-var conSubCategories = [
-  { name: "Languages", methodName: "AjaxConLanCollection" }
-];
-
-var subConCategories = d3.select("#catContibutor")
-    .selectAll("div.subCategory")
-    .data(conSubCategories)
-    .enter()
-    .append("div")
-    .attr("class", "subCategory")
-    .append("h5")
-    .text(function (d) { return d.name })
-    .on("click", ajaxData);
-
-var subClnCategories = d3.select("#catClient")
-    .selectAll("div.subCategory")
-    .data(clnSubCategories)
-    .enter()
-    .append("div")
-    .attr("class", "subCategory")
-    .append("h5")
-    .text(function (d) { return d.name })
-    .on("click", ajaxData);
 
 // *********** Hover/Click Functions for Categories
 
@@ -232,14 +220,14 @@ function hoverOverCategory(d, i) {
     var category = d3.select("div.catContainer").selectAll("div.category");
     var subcategory = d3.select(category[0][i]).selectAll("div.subCategory")
         .transition()
-        .style("height", "50px");
+        .style("opacity", "1");
 };
 
 function hoverOutCategory(d, i) {
     var category = d3.selectAll("div.category");
     d3.select(category[0][i]).selectAll("div.subCategory")
         .transition()
-        .style("height", "0px");
+        .style("opacity", "0");
 };
 
 
@@ -247,9 +235,15 @@ function hoverOutCategory(d, i) {
 d3.selectAll("div.category")
     .on("mouseover", hoverOverCategory)
     .on("mouseout", hoverOutCategory);
+
 //Bind categories to method names 
 var languageData = [{ methodName: "AjaxLanCollection" }];
 d3.select("#catLanguage").data(languageData).on("click", ajaxData);
 var jobtypeData = [{ methodName: "AjaxJbtCollection" }];
 d3.select("#catService").data(jobtypeData).on("click", ajaxData);
-
+var clndocData = [{ methodName: "AjaxClnDocCollection" }];
+d3.select("#clndocuments").data(clndocData).on("click", ajaxData);
+var clnjobData = [{ methodName: "AjaxClnJobCollection" }];
+d3.select("#clnjobs").data(clnjobData).on("click", ajaxData);
+var conlanData = [{ methodName: "AjaxConLanCollection" }];
+d3.select("#conlanguages").data(conlanData).on("click", ajaxData);

@@ -71,15 +71,34 @@
     <Content Include="ajaxExample.aspx" />
     <Content Include="circlepackExample.aspx" />
     <Content Include="dashboard.aspx" />
+    <Content Include="admindashboard.aspx" />
     <Content Include="default.aspx" />
     <Content Include="fileUploadExample.aspx" />
+    <Content Include="fonts\arrows\arrows.dev.svg" />
+    <Content Include="fonts\arrows\arrows.svg" />
+    <Content Include="images\hein.jpg" />
+    <Content Include="images\litlogo.png" />
     <Content Include="images\tree.png" />
+    <Content Include="images\vana.jpg" />
+    <Content Include="images\vana1.jpg" />
+    <Content Include="images\vana2.jpg" />
     <Content Include="images\z2zLogo.png" />
+    <Content Include="default.html" />
     <Content Include="newCirclePack.aspx" />
+    <Content Include="scripts\bookblock.js" />
     <Content Include="scripts\jquery-1.10.1.min.js" />
+    <Content Include="scripts\jquery.bookblock.js" />
+    <Content Include="scripts\jquerypp.custom.js" />
+    <Content Include="scripts\lit.js" />
+    <Content Include="scripts\logon.js" />
+    <Content Include="scripts\modernizr.custom.js" />
     <Content Include="scripts\newTest.js" />
     <Content Include="scripts\test.js" />
     <Content Include="scripts\z2z.js" />
+    <Content Include="styles\bookblock.css" />
+    <Content Include="styles\default.css" />
+    <Content Include="styles\litcss.css" />
+    <Content Include="styles\morebookblock.css" />
     <Content Include="styles\testCss.css" />
     <Content Include="styles\z2z.css" />
     <Content Include="svgDrawPathExample.aspx" />
@@ -104,6 +123,13 @@
     </Compile>
     <Compile Include="dashboard.aspx.designer.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admindashboard.aspx.cs">
+      <DependentUpon>admindashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admindashboard.aspx.designer.cs">
+      <DependentUpon>admindashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
@@ -136,6 +162,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\arrows\arrows.eot" />
+    <Content Include="fonts\arrows\arrows.ttf" />
+    <Content Include="fonts\arrows\arrows.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

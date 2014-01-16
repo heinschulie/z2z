@@ -6,10 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Zephry;
 using System.Web.Services;
-using System.IO;
-using System.Web.Script.Services;
-using System.Web.Script.Serialization;
-using System.Drawing;
 
 namespace Z2Z
 {
@@ -26,76 +22,104 @@ namespace Z2Z
         private static void setUserToken()
         {
             User vUser = new User();
-            vUser.UsrID = "schulie";
+            vUser.UsrID = "heinvh@zephry.co.za";
             vUser.UsrPassword = "theboss";
-            ServerSession.Logon(HttpContext.Current.Session, vUser); 
+            ServerSession.Logon(HttpContext.Current.Session, vUser);
         }
 
         [WebMethod(EnableSession = false)]
-        public static List<Client> AjaxClnDocCollection()
+        public static TransactionStatus userLogon(User aUser)
         {
-            if (ServerSession.GetUserToken(HttpContext.Current.Session) == null)
+            ServerSession.ClearSessionBusiness(HttpContext.Current.Session);
+            TransactionStatus vTransactionStatus = ServerSession.GetTransactionStatus(HttpContext.Current.Session);
+            try
             {
-                setUserToken(); 
+                ServerSession.Logon(HttpContext.Current.Session, aUser);
+                vTransactionStatus.TransactionResult = TransactionResult.OK;
+                vTransactionStatus.Message = "Login succesful";
+                vTransactionStatus.TargetUrl = "/admindashboard.aspx";
+                ServerSession.SetTransactionStatus(HttpContext.Current.Session, vTransactionStatus);
+            }
+            catch (TransactionStatusException tx)
+            {
+
+                vTransactionStatus.AssignFromSource(tx.TransactionStatus);
+                return vTransactionStatus;
+            }
+            catch (Exception ex)
+            {
+                vTransactionStatus.TransactionResult = TransactionResult.GeneralException;
+                vTransactionStatus.Message = "Login Unsuccesful - please check your username and password are correct" + ex.Message;
+                vTransactionStatus.InnerMessage = ex.InnerException == null ? String.Empty : ex.InnerException.Message;
+                return vTransactionStatus;
             }
 
-            ClientCollection vClientCollection = new ClientCollection();
-            UserServiceConsumer.GetClientCollection(ServerSession.GetUserToken(HttpContext.Current.Session), vClientCollection);
-
-            foreach (Client vClient in vClientCollection.ClientList)
-            {
-                DocumentCollection vDocumentCollection = new DocumentCollection();
-                vDocumentCollection.DocumentFilter.IsFiltered = true; 
-                vDocumentCollection.DocumentFilter.DocumentClientKeyFilter = vClient.ClnKey;
-                UserServiceConsumer.GetDocumentCollection(ServerSession.GetUserToken(HttpContext.Current.Session), vDocumentCollection);
-                foreach (Document vDocument in vDocumentCollection.DocumentList)
-                {
-                    //if (vClient.ClnKey == vDocument.ClnKey)
-                        vClient.children.Add(vDocument); 
-                }
-            }
-            return vClientCollection.ClientList;
+            return vTransactionStatus;
         }
 
         [WebMethod(EnableSession = false)]
-        public static List<Client> AjaxClnJobCollection()
-        {           
-            if (ServerSession.GetUserToken(HttpContext.Current.Session) == null)
-            {
-                setUserToken();               
-            }
-            UserToken vUserToken = new UserToken();
-            vUserToken.AssignFromSource(ServerSession.GetUserToken(HttpContext.Current.Session));
-            
-            ClientCollection vClientCollection = new ClientCollection();
-            UserServiceConsumer.GetClientCollection(vUserToken, vClientCollection);
+        public static TransactionStatus clientLogon(Client aClient)
+        {
+        //    ServerSession.ClearSessionBusiness(HttpContext.Current.Session);
+            TransactionStatus vTransactionStatus = ServerSession.GetTransactionStatus(HttpContext.Current.Session);
+        //    try
+        //    {
+        //        ServerSession.Logon(HttpContext.Current.Session, aClient);
+        //        vTransactionStatus.TransactionResult = TransactionResult.OK;
+        //        vTransactionStatus.Message = "Login succesful";
+        //        vTransactionStatus.TargetUrl = "/fandashboard.aspx";
+        //        ServerSession.SetTransactionStatus(HttpContext.Current.Session, vTransactionStatus);
+        //    }
+        //    catch (TransactionStatusException tx)
+        //    {
 
-            foreach (Client vClient in vClientCollection.ClientList)
-            {
-                JobCollection vJobCollection = new JobCollection();
-                vJobCollection.JobFilter.IsFiltered = true; 
-                vJobCollection.JobFilter.ClientKeyFilter = vClient.ClnKey;
-                UserServiceConsumer.GetJobCollection(vUserToken, vJobCollection);
-                foreach (Job vJob in vJobCollection.JobList)
-                {
-                    WorkItemCollection vWorkItemCollection = new WorkItemCollection();
-                    vWorkItemCollection.WorkItemFilter.IsFiltered = true;
-                    vWorkItemCollection.WorkItemFilter.ClientKeyFilter = vJob.ClnKey; 
-                    vWorkItemCollection.WorkItemFilter.JobKeyFilter = vJob.JobbKey;
-                    UserServiceConsumer.GetWorkItemCollection(vUserToken, vWorkItemCollection);
-                    foreach (WorkItem vWorkItem in vWorkItemCollection.WorkItemList)
-                    {
-                        vJob.children.Add(vWorkItem); 
-                    }
-                    vJob.value = vJob.children.Count(); 
-                    if (vClient.ClnKey == vJob.ClnKey)
-                        vClient.children.Add(vJob);
-                }
-                vClient.value = vClient.children.Count(); 
-            }
-            return vClientCollection.ClientList;
+        //        vTransactionStatus.AssignFromSource(tx.TransactionStatus);
+        //        return vTransactionStatus;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        vTransactionStatus.TransactionResult = TransactionResult.GeneralException;
+        //        vTransactionStatus.Message = "Login Unsuccesful - please check your username and password are correct" + ex.Message;
+        //        vTransactionStatus.InnerMessage = ex.InnerException == null ? String.Empty : ex.InnerException.Message;
+        //        return vTransactionStatus;
+        //    }
+
+            return vTransactionStatus;
         }
 
+        [WebMethod(EnableSession = false)]
+        public static TransactionStatus clientRegister(Client aClient)
+        {
+            ServerSession.ClearSessionBusiness(HttpContext.Current.Session);
+            TransactionStatus vTransactionStatus = ServerSession.GetTransactionStatus(HttpContext.Current.Session);
+            try
+            {
+                UserToken aUserToken = new UserToken();
+                aUserToken.UserID = "Register";
+                aUserToken.Password = "Register";
+                aUserToken.Url = "http://localhost/z2zsoap/Z2ZService.asmx";
+                aClient.ClnName = "fanatic";
+                UserServiceConsumer.AddClient(aUserToken, aClient);
+                vTransactionStatus.TransactionResult = TransactionResult.OK;
+                vTransactionStatus.Message = "You have been succesfully registered!";
+                vTransactionStatus.TargetUrl = "/clientdashboard.aspx";
+                ServerSession.SetTransactionStatus(HttpContext.Current.Session, vTransactionStatus);
+            }
+            catch (TransactionStatusException tx)
+            {
+                vTransactionStatus.AssignFromSource(tx.TransactionStatus);
+                return vTransactionStatus;
+            }
+            catch (Exception ex)
+            {
+                vTransactionStatus.TransactionResult = TransactionResult.GeneralException;
+                vTransactionStatus.Message = ex.Message;
+                vTransactionStatus.InnerMessage = ex.InnerException == null ? String.Empty : ex.InnerException.Message;
+                return vTransactionStatus;
+            }
+
+            return vTransactionStatus;
+        }
 
         [WebMethod(EnableSession = false)]
         public static List<Language> AjaxLanCollection()
@@ -125,56 +149,9 @@ namespace Z2Z
 
             JobTypeCollection vJobTypeCollection = new JobTypeCollection();
             UserServiceConsumer.GetJobTypeCollection(vUserToken, vJobTypeCollection);
-            
+
 
             return vJobTypeCollection.JobTypeList;
-        }
-
-
-        [WebMethod(EnableSession = false)]
-        public static List<Contributor> AjaxConLanCollection()
-        {
-            if (ServerSession.GetUserToken(HttpContext.Current.Session) == null)
-            {
-                setUserToken();
-            }
-            UserToken vUserToken = new UserToken();
-            vUserToken.AssignFromSource(ServerSession.GetUserToken(HttpContext.Current.Session));
-
-            ContributorCollection vContributorCollection = new ContributorCollection();
-            UserServiceConsumer.GetContributorCollection(vUserToken, vContributorCollection);
-
-            foreach (Contributor vContributor in vContributorCollection.ContributorList)
-            {
-                LanguageCollection vLanguageCollection = new LanguageCollection();
-                UserServiceConsumer.GetLanguageCollection(vUserToken, vLanguageCollection);
-                foreach (Language vLanguage in vLanguageCollection.LanguageList)
-                {
-                    vContributor.children.Add(vLanguage);
-                }
-
-                vContributor.value = vContributor.children.Count();
-            }
-            return vContributorCollection.ContributorList;
-        }
-
-        [WebMethod(EnableSession = false)]
-        public static string UploadDocument(string json)
-        {
-            //Capture File From Post
-            //HttpPostedFile file = context.Request.Files["fileToUpload"];
-
-            //Optional: Convert to File to binary if you need to forward it to a video encoding service like Panda Stream
-            //BinaryReader vBinaryReader = new BinaryReader(file.InputStream);
-            //byte[] binData = vBinaryReader.ReadBytes(file.ContentLength);
-            //vBinaryReader.Close();
-
-
-            string result = json + "Shine your lonely light me";
-            return result;  
-
-            //context.Response.ContentType = "text/plain";
-            //context.Response.Write(result);
         }
     }
 }

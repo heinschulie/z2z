@@ -8,8 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace Z2Z {
-    
-    
-    public partial class _default {
+
+
+    public partial class _admindashboard
+    {
     }
 }

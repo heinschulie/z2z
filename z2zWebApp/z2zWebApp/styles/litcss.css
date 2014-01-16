@@ -1,0 +1,150 @@
+﻿.litlogo
+{
+    height: 75%;
+    width: 40%;
+    margin-top: -5%;  
+}
+
+.headerlogo
+{
+    height: 100%;
+    width: 20%; 
+    float: left; 
+    background-image: url(/images/litlogo.png);
+    background-size: contain; 
+    background-repeat: no-repeat;  
+}
+
+.headerlinks
+{
+    height: 100%;
+    width: 80%; 
+    float: left;  
+}
+
+    .headerlinks p
+    {
+        color: #FFFFFF; 
+        text-align: center; 
+        float: left; 
+        width: 20%; 
+        transition: 0.5s;
+        margin-top: 2.5%;  
+    }
+    .headerlinks p:hover
+    {
+        color: #FFCC00; 
+        cursor: pointer; 
+        text-decoration-color: antiquewhite;  
+    }
+
+.innerHeading
+{
+    width: 50%;
+    height: 20%;
+    overflow: hidden; 
+    text-align: center; 
+    float: left;
+    cursor: pointer;
+    color: dimgray; 
+}
+    .innerHeading:hover
+    {
+        color: #1E90FF; 
+    }
+
+.navigation
+{
+    width: 100%;
+    height: 80%; 
+}
+
+circle {
+  stroke: #848688;
+  fill-opacity: 0.1;
+  fill: cadetblue; 
+}
+    circle:hover
+    {
+        fill: azure;
+        stroke: red;  
+    }
+
+.updatedCircle
+{
+  stroke: cornflowerblue;  
+  fill-opacity: 0.2;
+  fill: cornflowerblue; 
+}
+
+.node
+{
+    width: 400px;
+    height: 400px; 
+    fill: cadetblue;  
+    }
+    .node:hover
+    {
+        fill: azure;
+        stroke: red;  
+    }
+.leaf
+{
+    fill:crimson;  
+    }
+    .leaf:hover
+    {
+        fill:aliceblue; 
+        stroke: red;  
+    }
+
+.circleText
+{
+    fill: cornflowerblue; 
+    font-size: large; 
+}
+
+.imgcontainer
+{
+    width: 100%; 
+    height: 50%;
+}
+
+.brothers
+{
+    width: 50%; 
+    height: 100%;
+    background-size: cover;
+    background-position: top left;  
+    background-repeat: no-repeat; 
+    float: left; 
+}
+
+#van
+{
+    background-image: url(../images/vana2.jpg); 
+}
+
+#hein
+{
+    background-image: url(../images/hein.jpg); 
+}
+
+/***************/
+
+#loginform
+{
+    width: 50%; 
+    height: 100%;
+    /*overflow: hidden;*/ 
+    display: block; 
+    transition: 0,8s; 
+}
+
+#registerform
+{
+    width: 50%; 
+    overflow: hidden; 
+    display: none; 
+    transition: 0,8s; 
+}
